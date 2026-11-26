@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attack Surface Scanner</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <div id="banner" class="banner" role="alert" hidden>
+    <span class="banner-mark" aria-hidden="true">▲</span>
+    CRITICAL: FULL ATTACK SURFACE EXPOSED
+  </div>
+
+  <main class="shell">
+    <header class="head">
+      <div class="brand">
+        <span class="prompt" aria-hidden="true">&gt;_</span>
+        <h1>Attack Surface Scanner</h1>
+      </div>
+      <p class="sub">Scans your own domain for exposed panels, leaking logs and private keys. Only real responses are shown.</p>
+    </header>
+
+    <form id="form" class="target" autocomplete="off">
+      <label for="target" class="sr-only">Your domain</label>
+      <span class="target-prefix" aria-hidden="true">target://</span>
+      <input id="target" name="target" type="text" inputmode="url" spellcheck="false"
+             placeholder="your-domain.com" required>
+      <button id="go" type="submit">Scan</button>
+      <label class="consent">
+        <input id="authorized" type="checkbox" required>
+        <span>I own this domain or have written permission to test it</span>
+      </label>
+    </form>
+
+    <section class="exposure" aria-live="polite">
+      <div class="exp-left">
+        <span class="exp-label">Exposure</span>
+        <span id="sev" class="sev" data-sev="idle">Idle</span>
+      </div>
+      <div class="exp-mid">
+        <div class="meter" aria-hidden="true"><span id="meter-fill"></span></div>
+        <span id="status" class="exp-status">Enter a domain you control to begin.</span>
+      </div>
+      <div class="exp-right">
+        <span class="loot-label">Loot</span>
+        <span id="loot" class="loot">0</span>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card" id="card-panels" data-state="idle">
+        <div class="card-inner">
+          <header class="card-head">
+            <span class="card-idx">01</span>
+            <h2>Exposed panels</h2>
+            <span class="badge" data-count="0">0</span>
+          </header>
+          <div class="card-state"><span class="spinner" aria-hidden="true"></span><span class="state-text">Waiting</span></div>
+          <div class="progress"><span></span></div>
+          <ul class="findings"></ul>
+          <footer class="defence"><span>Defence</span> Put admin panels behind authentication and remove the ones you don't use.</footer>
+        </div>
+      </article>
+
+      <article class="card" id="card-logs" data-state="idle">
+        <div class="card-inner">
+          <header class="card-head">
+            <span class="card-idx">02</span>
+            <h2>Leaking logs</h2>
+            <span class="badge" data-count="0">0</span>
+          </header>
+          <div class="card-state"><span class="spinner" aria-hidden="true"></span><span class="state-text">Waiting</span></div>
+          <div class="progress"><span></span></div>
+          <ul class="findings"></ul>
+          <footer class="defence"><span>Defence</span> Never serve log files from the web root, and redact tokens and emails before they are written.</footer>
+        </div>
+      </article>
+
+      <article class="card" id="card-keys" data-state="idle">
+        <div class="card-inner">
+          <header class="card-head">
+            <span class="card-idx">03</span>
+            <h2>Exposed keys</h2>
+            <span class="badge" data-count="0">0</span>
+          </header>
+          <div class="card-state"><span class="spinner" aria-hidden="true"></span><span class="state-text">Waiting</span></div>
+          <div class="progress"><span></span></div>
+          <ul class="findings"></ul>
+          <footer class="defence"><span>Defence</span> Keep private keys outside the web root, and rotate any key that was ever exposed.</footer>
+        </div>
+      </article>
+    </section>
+
+    <p class="foot">Runs locally. Private keys and secrets are masked on the server and never sent to the browser in full.</p>
+  </main>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

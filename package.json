@@ -1,0 +1,12 @@
+{
+  "name": "attack-surface-scanner",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Scan your own domain for exposed panels, leaking logs and exposed private keys.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test-target": "node test/target.js"
+  },
+  "engines": { "node": ">=20" }
+}
